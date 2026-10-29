@@ -1,0 +1,13 @@
+const express = require("express");
+const router = express.Router();
+const authenticateToken = require("../middleware/authenticateToken");
+const controller = require("../controllers/courseController");
+const { validateCourse, validateCourseUpdate } = require("../middleware/courseValidation");
+router.use(authenticateToken);
+router.get("/", controller.getAllCourses);
+router.get("/:id", controller.getCourseById);
+router.post("/", validateCourse, controller.createCourse);
+router.put("/:id", validateCourseUpdate, controller.updateCourse);
+router.patch("/:id", validateCourseUpdate, controller.updateCourse);
+router.delete("/:id", controller.deleteCourse);
+module.exports = router;
